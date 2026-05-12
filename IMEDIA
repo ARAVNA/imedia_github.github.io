@@ -37,7 +37,7 @@ export default function AgencyWebsite() {
           <div className="flex flex-col items-center">
 
             <img
-              src="/ade esther.jpeg"
+              src="/ade-esther.jpeg"
               alt="Adé Esther"
               className="rounded-3xl shadow-2xl w-full max-w-md"
             />
