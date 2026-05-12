@@ -1,183 +1,138 @@
 export default function AgencyWebsite() {
   return (
-    <div className="min-h-screen bg-white text-gray-900">
+    <div className="min-h-screen bg-[#2d0b59] text-white">
+
       {/* HERO */}
-      <section className="bg-gradient-to-br from-blue-900 via-blue-700 to-sky-500 text-white px-6 py-20">
+      <section className="bg-gradient-to-br from-purple-900 via-fuchsia-800 to-purple-700 px-6 py-20">
         <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-12 items-center">
+
+          {/* Texte */}
           <div>
-            <h1 className="text-5xl font-bold leading-tight mb-6">
-              INTELLIGENCIA MEDIA — Creative • Music • AI
+            <p className="uppercase tracking-[6px] text-yellow-300 text-sm mb-4">
+              Gospel • Adoration • Louange
+            </p>
+
+            <h1 className="text-5xl md:text-6xl font-bold leading-tight mb-6">
+              Chantre <span className="text-yellow-300">Adé Esther</span>
             </h1>
-            <p className="text-lg text-blue-100 mb-8">
-              Vidéos TikTok, contenus réseaux sociaux, publicités, design,
-              branding et intelligence artificielle pour les entreprises
-              africaines.
+
+            <p className="text-lg text-purple-100 mb-8">
+              Plateforme officielle de Chantre Adé Esther :
+              musique gospel, vidéos, concerts,
+              streaming et contenus spirituels.
             </p>
 
             <div className="flex flex-wrap gap-4">
-              <button className="bg-white text-blue-800 px-6 py-3 rounded-2xl font-semibold shadow-lg hover:scale-105 transition">
-                Commencer
+              <button className="bg-yellow-300 text-purple-900 px-6 py-3 rounded-2xl font-semibold shadow-xl">
+                Écouter les chants
               </button>
 
-              <button className="border border-white px-6 py-3 rounded-2xl hover:bg-white hover:text-blue-800 transition">
-                Voir nos services
+              <button className="border border-yellow-300 px-6 py-3 rounded-2xl hover:bg-yellow-300 hover:text-purple-900 transition">
+                Réserver un concert
               </button>
             </div>
           </div>
 
-          <div className="bg-white/10 backdrop-blur-md rounded-3xl p-8 shadow-2xl">
-            <div className="space-y-5">
-              <div className="bg-white/20 rounded-2xl p-4">
-                <h3 className="font-bold text-xl">🎬 Création Vidéo</h3>
-                <p className="text-blue-100 mt-2">
-                  Reels, TikTok, publicités et vidéos professionnelles.
-                </p>
-              </div>
+          {/* Image + vidéo */}
+          <div className="flex flex-col items-center">
 
-              <div className="bg-white/20 rounded-2xl p-4">
-                <h3 className="font-bold text-xl">🤖 Contenus IA</h3>
-                <p className="text-blue-100 mt-2">
-                  Scripts, voix off, textes marketing et automatisation.
-                </p>
-              </div>
+            <img
+              src="/ade esther.jpeg"
+              alt="Adé Esther"
+              className="rounded-3xl shadow-2xl w-full max-w-md"
+            />
 
-              <div className="bg-white/20 rounded-2xl p-4">
-                <h3 className="font-bold text-xl">📱 Réseaux Sociaux</h3>
-                <p className="text-blue-100 mt-2">
-                  Gestion de pages, designs et stratégie digitale.
-                </p>
-              </div>
-            </div>
+            <video
+              controls
+              className="rounded-3xl shadow-2xl mt-6 w-full max-w-md"
+            >
+              <source
+                src="/WhatsApp Video 2026-05-12 at 09.48.51.mp4"
+                type="video/mp4"
+              />
+            </video>
+
           </div>
         </div>
       </section>
 
       {/* SERVICES */}
-      <section className="py-20 px-6 bg-gray-50">
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-14">
-            <h2 className="text-4xl font-bold mb-4">Nos Services</h2>
-            <p className="text-gray-600 text-lg">
-              Agence média premium spécialisée en création de contenus, production artistique et intelligence artificielle.
-            </p>
+      <section className="px-6 py-16">
+        <div className="max-w-6xl mx-auto grid md:grid-cols-4 gap-6">
+
+          <div className="bg-white/10 backdrop-blur-md rounded-3xl p-6 text-center shadow-xl">
+            <h3 className="font-bold text-xl">
+              Paiement Sécurisé
+            </h3>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-8">
-            {[
-              {
-                title: 'Création de vidéos',
-                desc: 'Production de vidéos courtes et professionnelles pour TikTok, Instagram et Facebook.',
-              },
-              {
-                title: 'Design graphique',
-                desc: 'Affiches, logos, flyers, visuels publicitaires et branding moderne.',
-              },
-              {
-                title: 'Marketing digital',
-                desc: 'Stratégie digitale et contenus qui attirent des clients.',
-              },
-              {
-                title: 'Publicités Meta',
-                desc: 'Création de campagnes Facebook et Instagram performantes.',
-              },
-              {
-                title: 'Voix off IA',
-                desc: 'Voix professionnelles automatiques pour vos vidéos et publicités.',
-              },
-              {
-                title: 'Sites internet',
-                desc: 'Sites modernes pour présenter votre entreprise avec crédibilité.',
-              },
-            ].map((service, index) => (
-              <div
-                key={index}
-                className="bg-white p-8 rounded-3xl shadow-md hover:shadow-xl transition"
-              >
-                <h3 className="text-2xl font-bold mb-4 text-blue-800">
-                  {service.title}
-                </h3>
-                <p className="text-gray-600 leading-relaxed">
-                  {service.desc}
-                </p>
-              </div>
-            ))}
+          <div className="bg-white/10 backdrop-blur-md rounded-3xl p-6 text-center shadow-xl">
+            <h3 className="font-bold text-xl">
+              Télécharger l’Application
+            </h3>
           </div>
+
+          <div className="bg-white/10 backdrop-blur-md rounded-3xl p-6 text-center shadow-xl">
+            <h3 className="font-bold text-xl">
+              Boutique en Vedette
+            </h3>
+          </div>
+
+          <div className="bg-white/10 backdrop-blur-md rounded-3xl p-6 text-center shadow-xl">
+            <h3 className="font-bold text-xl">
+              TV Live Gospel
+            </h3>
+          </div>
+
         </div>
       </section>
 
-      {/* ABOUT */}
-      <section className="py-20 px-6">
-        <div className="max-w-5xl mx-auto text-center">
-          <h2 className="text-4xl font-bold mb-6">
-            Pourquoi choisir notre agence ?
+      {/* À PROPOS */}
+      <section className="px-6 pb-20">
+        <div className="max-w-5xl mx-auto bg-white/10 rounded-3xl p-10 shadow-2xl">
+
+          <h2 className="text-4xl font-bold text-yellow-300 mb-6">
+            À propos
           </h2>
 
-          <p className="text-lg text-gray-600 leading-relaxed mb-12">
-            Nous aidons les entreprises africaines à avoir une image moderne,
-            professionnelle et visible sur internet grâce aux nouvelles
-            technologies et à l’intelligence artificielle.
+          <p className="text-lg text-purple-100 leading-8">
+            Chantre Adé Esther est une artiste gospel passionnée par la louange,
+            l’adoration et l’édification spirituelle à travers ses chants.
+            Son ministère touche des vies au travers de concerts,
+            prestations live, vidéos et contenus inspirants.
           </p>
 
-          <div className="grid md:grid-cols-3 gap-8">
-            <div className="bg-blue-50 p-8 rounded-3xl">
-              <h3 className="text-3xl font-bold text-blue-800 mb-3">⚡</h3>
-              <h4 className="font-bold text-xl mb-2">Rapide</h4>
-              <p className="text-gray-600">
-                Des contenus créés rapidement avec les outils IA modernes.
-              </p>
-            </div>
+          {/* Réseaux */}
+          <div className="flex gap-6 mt-8 flex-wrap">
 
-            <div className="bg-blue-50 p-8 rounded-3xl">
-              <h3 className="text-3xl font-bold text-blue-800 mb-3">💡</h3>
-              <h4 className="font-bold text-xl mb-2">Créatif</h4>
-              <p className="text-gray-600">
-                Des idées originales adaptées au marché africain.
-              </p>
-            </div>
+            <a
+              href="https://instagram.com"
+              target="_blank"
+              className="bg-pink-600 px-5 py-3 rounded-2xl font-semibold"
+            >
+              Instagram
+            </a>
 
-            <div className="bg-blue-50 p-8 rounded-3xl">
-              <h3 className="text-3xl font-bold text-blue-800 mb-3">📈</h3>
-              <h4 className="font-bold text-xl mb-2">Efficace</h4>
-              <p className="text-gray-600">
-                Des contenus pensés pour attirer des clients.
-              </p>
-            </div>
+            <a
+              href="https://snapchat.com"
+              target="_blank"
+              className="bg-yellow-400 text-black px-5 py-3 rounded-2xl font-semibold"
+            >
+              Snapchat
+            </a>
+
+            <a
+              href="https://youtube.com"
+              target="_blank"
+              className="bg-red-600 px-5 py-3 rounded-2xl font-semibold"
+            >
+              YouTube
+            </a>
+
           </div>
         </div>
       </section>
 
-      {/* CTA */}
-      <section className="py-20 px-6 bg-blue-900 text-white text-center">
-        <div className="max-w-4xl mx-auto">
-          <h2 className="text-4xl font-bold mb-6">
-            Votre entreprise mérite une image professionnelle.
-          </h2>
-
-          <p className="text-blue-100 text-lg mb-8">
-            Contactez-nous dès aujourd’hui pour développer votre présence
-            digitale.
-          </p>
-
-          <button className="bg-white text-blue-900 px-8 py-4 rounded-2xl font-bold text-lg hover:scale-105 transition">
-            Nous contacter
-          </button>
-        </div>
-      </section>
-
-      {/* FOOTER */}
-      <footer className="bg-gray-950 text-gray-400 py-10 px-6 text-center">
-        <h3 className="text-2xl font-bold text-white mb-3">
-          INTELLIGENCIA MEDIA
-        </h3>
-
-        <p>
-          Création de contenus • IA • Marketing Digital • Branding
-        </p>
-
-        <p className="mt-6 text-sm text-gray-500">
-          © 2026 Tous droits réservés.
-        </p>
-      </footer>
     </div>
-  )
+  );
 }
