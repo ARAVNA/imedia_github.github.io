@@ -140,6 +140,19 @@
     .bg-gradient::before { content: ''; position: absolute; top: -50%; right: -20%; width: 600px; height: 600px; background: radial-gradient(circle, rgba(0,217,255,0.03) 0%, transparent 70%); pointer-events: none; }
     .bg-akili { background: linear-gradient(135deg, #0b0f1a 0%, #1a1200 50%, #0b0f1a 100%); }
 
+    /* BANDE DÉFILANTE */
+    .ticker-wrap { background: linear-gradient(135deg, #0a0e1a, #111a30); border-top: 1px solid rgba(0,217,255,0.1); border-bottom: 1px solid rgba(0,217,255,0.1); padding: 14px 0; overflow: hidden; position: relative; }
+    .ticker-wrap::before, .ticker-wrap::after { content:''; position:absolute; top:0; width:120px; height:100%; z-index:2; }
+    .ticker-wrap::before { left:0; background: linear-gradient(to right, #0a0e1a, transparent); }
+    .ticker-wrap::after  { right:0; background: linear-gradient(to left, #0a0e1a, transparent); }
+    .ticker-track { display: flex; gap: 0; width: max-content; animation: ticker 30s linear infinite; }
+    .ticker-track:hover { animation-play-state: paused; }
+    @keyframes ticker { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+    .ticker-item { display: inline-flex; align-items: center; gap: 10px; padding: 0 32px; font-size: 13px; font-weight: 600; color: var(--text-secondary); white-space: nowrap; letter-spacing: 0.5px; }
+    .ticker-item i { color: var(--primary); font-size: 14px; }
+    .ticker-item.gold i { color: var(--gold); }
+    .ticker-sep { color: var(--primary); opacity: 0.3; font-size: 18px; }
+
     /* SERVICES */
     .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 30px; max-width: 1400px; margin: 0 auto; }
     .service-card { background: var(--bg-dark); padding: 40px 35px; border-radius: 24px; border: 1px solid var(--border); transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1); position: relative; overflow: hidden; }
@@ -501,6 +514,58 @@
   </div>
   <div class="scroll-indicator"><i class="fa-solid fa-chevron-down"></i></div>
 </section>
+
+<!-- BANDE DÉFILANTE -->
+<div class="ticker-wrap">
+  <div class="ticker-track">
+    <!-- Première copie -->
+    <span class="ticker-item"><i class="fa-solid fa-brain"></i> Intelligence Artificielle</span>
+    <span class="ticker-sep">✦</span>
+    <span class="ticker-item"><i class="fa-solid fa-code"></i> Développement Web</span>
+    <span class="ticker-sep">✦</span>
+    <span class="ticker-item gold"><i class="fa-solid fa-brain"></i> Akili ERP</span>
+    <span class="ticker-sep">✦</span>
+    <span class="ticker-item"><i class="fa-solid fa-microphone-lines"></i> Studio d'Enregistrement</span>
+    <span class="ticker-sep">✦</span>
+    <span class="ticker-item"><i class="fa-solid fa-video"></i> Production Vidéo 4K</span>
+    <span class="ticker-sep">✦</span>
+    <span class="ticker-item"><i class="fa-solid fa-chart-line"></i> Marketing Digital</span>
+    <span class="ticker-sep">✦</span>
+    <span class="ticker-item"><i class="fa-solid fa-mobile-screen-button"></i> Applications Mobiles</span>
+    <span class="ticker-sep">✦</span>
+    <span class="ticker-item"><i class="fa-solid fa-chalkboard-user"></i> Formation IA</span>
+    <span class="ticker-sep">✦</span>
+    <span class="ticker-item"><i class="fa-solid fa-users"></i> 120+ Clients Satisfaits</span>
+    <span class="ticker-sep">✦</span>
+    <span class="ticker-item"><i class="fa-solid fa-star"></i> Note 5★</span>
+    <span class="ticker-sep">✦</span>
+    <span class="ticker-item"><i class="fa-solid fa-location-dot"></i> Abidjan, Côte d'Ivoire 🇨🇮</span>
+    <span class="ticker-sep">✦</span>
+    <!-- Deuxième copie (pour boucle infinie) -->
+    <span class="ticker-item"><i class="fa-solid fa-brain"></i> Intelligence Artificielle</span>
+    <span class="ticker-sep">✦</span>
+    <span class="ticker-item"><i class="fa-solid fa-code"></i> Développement Web</span>
+    <span class="ticker-sep">✦</span>
+    <span class="ticker-item gold"><i class="fa-solid fa-brain"></i> Akili ERP</span>
+    <span class="ticker-sep">✦</span>
+    <span class="ticker-item"><i class="fa-solid fa-microphone-lines"></i> Studio d'Enregistrement</span>
+    <span class="ticker-sep">✦</span>
+    <span class="ticker-item"><i class="fa-solid fa-video"></i> Production Vidéo 4K</span>
+    <span class="ticker-sep">✦</span>
+    <span class="ticker-item"><i class="fa-solid fa-chart-line"></i> Marketing Digital</span>
+    <span class="ticker-sep">✦</span>
+    <span class="ticker-item"><i class="fa-solid fa-mobile-screen-button"></i> Applications Mobiles</span>
+    <span class="ticker-sep">✦</span>
+    <span class="ticker-item"><i class="fa-solid fa-chalkboard-user"></i> Formation IA</span>
+    <span class="ticker-sep">✦</span>
+    <span class="ticker-item"><i class="fa-solid fa-users"></i> 120+ Clients Satisfaits</span>
+    <span class="ticker-sep">✦</span>
+    <span class="ticker-item"><i class="fa-solid fa-star"></i> Note 5★</span>
+    <span class="ticker-sep">✦</span>
+    <span class="ticker-item"><i class="fa-solid fa-location-dot"></i> Abidjan, Côte d'Ivoire 🇨🇮</span>
+    <span class="ticker-sep">✦</span>
+  </div>
+</div>
 
 <!-- SERVICES -->
 <section id="services">
