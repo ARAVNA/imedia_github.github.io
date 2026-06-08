@@ -156,6 +156,41 @@
     .service-tag { background: rgba(0,217,255,0.08); color: var(--primary); padding: 5px 14px; border-radius: 20px; font-size: 12px; font-weight: 500; }
     .service-price { color: var(--primary); font-weight: 700; font-size: 16px; display: flex; align-items: center; gap: 8px; }
 
+    /* BOUTON EN SAVOIR PLUS */
+    .service-more-btn { display: inline-flex; align-items: center; gap: 7px; margin-top: 16px; padding: 8px 18px; border-radius: 20px; border: 1px solid var(--border-hover); background: transparent; color: var(--primary); font-size: 13px; font-weight: 600; cursor: pointer; font-family: 'Inter', sans-serif; transition: all 0.3s ease; }
+    .service-more-btn:hover { background: var(--primary); color: #000; }
+
+    /* MODAL SERVICE */
+    .service-modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 9000; align-items: center; justify-content: center; padding: 20px; backdrop-filter: blur(6px); }
+    .service-modal-overlay.open { display: flex; animation: fadeInModal 0.25s ease; }
+    @keyframes fadeInModal { from { opacity:0; } to { opacity:1; } }
+    .service-modal { background: var(--bg-card); border: 1px solid var(--border-hover); border-radius: 24px; width: 100%; max-width: 680px; max-height: 90vh; overflow-y: auto; position: relative; }
+    .service-modal::-webkit-scrollbar { width: 6px; }
+    .service-modal::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 3px; }
+    .service-modal-header { padding: 30px 35px 20px; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 18px; }
+    .service-modal-icon { width: 60px; height: 60px; border-radius: 18px; background: rgba(0,217,255,0.12); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .service-modal-icon i { font-size: 28px; color: var(--primary); }
+    .service-modal-title { font-size: 22px; font-weight: 800; color: var(--text); margin-bottom: 4px; }
+    .service-modal-price { font-size: 14px; color: var(--primary); font-weight: 600; }
+    .service-modal-close { position: absolute; top: 18px; right: 20px; background: rgba(255,255,255,0.05); border: 1px solid var(--border); border-radius: 50%; width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; cursor: pointer; color: var(--text-muted); font-size: 16px; transition: all 0.2s ease; }
+    .service-modal-close:hover { background: var(--primary); color: #000; border-color: var(--primary); }
+    .service-modal-body { padding: 28px 35px 35px; }
+    .service-modal-section { margin-bottom: 26px; }
+    .service-modal-section h4 { font-size: 13px; text-transform: uppercase; letter-spacing: 2px; color: var(--primary); font-weight: 700; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+    .service-modal-section p { color: var(--text-secondary); font-size: 15px; line-height: 1.8; }
+    .service-modal-list { list-style: none; }
+    .service-modal-list li { display: flex; align-items: flex-start; gap: 10px; color: var(--text-secondary); font-size: 15px; margin-bottom: 10px; line-height: 1.6; }
+    .service-modal-list li i { color: #10B981; font-size: 13px; flex-shrink: 0; margin-top: 4px; }
+    .service-modal-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+    .service-modal-tag { background: rgba(0,217,255,0.08); color: var(--primary); padding: 5px 14px; border-radius: 20px; font-size: 12px; font-weight: 500; border: 1px solid rgba(0,217,255,0.15); }
+    .service-modal-cta { display: flex; gap: 12px; margin-top: 28px; flex-wrap: wrap; }
+    .service-modal-cta a { flex: 1; min-width: 180px; text-align: center; padding: 13px 20px; border-radius: 50px; font-weight: 700; font-size: 14px; text-decoration: none; transition: all 0.3s ease; }
+    .service-modal-cta .cta-wa { background: #25D366; color: #fff; }
+    .service-modal-cta .cta-wa:hover { background: #128C7E; transform: translateY(-2px); }
+    .service-modal-cta .cta-outline { border: 2px solid var(--primary); color: var(--primary); }
+    .service-modal-cta .cta-outline:hover { background: var(--primary); color: #000; }
+    @media(max-width:600px) { .service-modal-header, .service-modal-body { padding: 20px; } }
+
     /* ===== AKILI ERP SECTION ===== */
     .akili-hero { display: grid; grid-template-columns: 1fr 1fr; gap: 70px; align-items: center; max-width: 1200px; margin: 0 auto 80px; }
     .akili-badge-wrap { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; }
@@ -398,6 +433,21 @@
 </head>
 <body>
 
+<!-- MODAL SERVICE DETAIL -->
+<div class="service-modal-overlay" id="serviceModalOverlay" onclick="closeServiceModal(event)">
+  <div class="service-modal" id="serviceModal">
+    <button class="service-modal-close" onclick="closeServiceModal()"><i class="fa-solid fa-xmark"></i></button>
+    <div class="service-modal-header">
+      <div class="service-modal-icon" id="modalIcon"></div>
+      <div>
+        <div class="service-modal-title" id="modalTitle"></div>
+        <div class="service-modal-price" id="modalPrice"></div>
+      </div>
+    </div>
+    <div class="service-modal-body" id="modalBody"></div>
+  </div>
+</div>
+
 <!-- HEADER -->
 <header id="main-header">
   <nav>
@@ -466,6 +516,7 @@
       <p>Chatbots intelligents, automatisation des processus, analyse prédictive et IA générative pour booster votre productivité.</p>
       <div class="service-tags"><span class="service-tag">Chatbots</span><span class="service-tag">Automatisation</span><span class="service-tag">Data Science</span></div>
       <div class="service-price"><i class="fa-solid fa-tag"></i> À partir de 150 000 FCFA</div>
+      <button class="service-more-btn" onclick="openServiceModal('ia')">En savoir plus <i class="fa-solid fa-arrow-right"></i></button>
     </div>
     <div class="service-card reveal delay-2">
       <div class="service-icon"><i class="fa-solid fa-code"></i></div>
@@ -473,6 +524,7 @@
       <p>Sites vitrines, e-commerce avec paiement mobile, applications web et mobiles performantes. Design responsive et UX optimisée.</p>
       <div class="service-tags"><span class="service-tag">Site Vitrine</span><span class="service-tag">E-commerce</span><span class="service-tag">Sur Mesure</span></div>
       <div class="service-price"><i class="fa-solid fa-tag"></i> À partir de 250 000 FCFA</div>
+      <button class="service-more-btn" onclick="openServiceModal('web')">En savoir plus <i class="fa-solid fa-arrow-right"></i></button>
     </div>
     <div class="service-card reveal delay-3">
       <div class="service-icon"><i class="fa-solid fa-microphone-lines"></i></div>
@@ -480,6 +532,7 @@
       <p>Voix off professionnelle, podcast, enregistrement musical, mixage et mastering. Équipement haut de gamme, son impeccable.</p>
       <div class="service-tags"><span class="service-tag">Voix Off</span><span class="service-tag">Musique</span><span class="service-tag">Podcast</span></div>
       <div class="service-price"><i class="fa-solid fa-tag"></i> À partir de 50 000 FCFA</div>
+      <button class="service-more-btn" onclick="openServiceModal('studio')">En savoir plus <i class="fa-solid fa-arrow-right"></i></button>
     </div>
     <div class="service-card reveal delay-4">
       <div class="service-icon"><i class="fa-solid fa-video"></i></div>
@@ -487,6 +540,7 @@
       <p>Clips musicaux, publicités, documentaires et contenus corporate. Tournage 4K, drones, montage pro et étalonnage cinéma.</p>
       <div class="service-tags"><span class="service-tag">Clip</span><span class="service-tag">Publicité</span><span class="service-tag">Corporate</span></div>
       <div class="service-price"><i class="fa-solid fa-tag"></i> À partir de 300 000 FCFA</div>
+      <button class="service-more-btn" onclick="openServiceModal('video')">En savoir plus <i class="fa-solid fa-arrow-right"></i></button>
     </div>
     <div class="service-card reveal delay-5">
       <div class="service-icon"><i class="fa-solid fa-chart-line"></i></div>
@@ -494,6 +548,7 @@
       <p>Stratégie social media, SEO/SEA, branding, campagnes publicitaires ciblées. Augmentez votre visibilité et convertissez vos leads.</p>
       <div class="service-tags"><span class="service-tag">Social Media</span><span class="service-tag">SEO</span><span class="service-tag">Branding</span></div>
       <div class="service-price"><i class="fa-solid fa-tag"></i> À partir de 150 000 FCFA/mois</div>
+      <button class="service-more-btn" onclick="openServiceModal('marketing')">En savoir plus <i class="fa-solid fa-arrow-right"></i></button>
     </div>
     <div class="service-card reveal delay-6">
       <div class="service-icon"><i class="fa-solid fa-mobile-screen-button"></i></div>
@@ -501,6 +556,7 @@
       <p>Apps Android/iOS natives et hybrides. Paiement mobile (Orange Money, Wave, MTN), géolocalisation, chat temps réel, push notifications.</p>
       <div class="service-tags"><span class="service-tag">Android</span><span class="service-tag">iOS</span><span class="service-tag">Flutter</span></div>
       <div class="service-price"><i class="fa-solid fa-tag"></i> À partir de 1 200 000 FCFA</div>
+      <button class="service-more-btn" onclick="openServiceModal('app')">En savoir plus <i class="fa-solid fa-arrow-right"></i></button>
     </div>
     <div class="service-card reveal delay-1" style="border-color:rgba(245,158,11,0.2);">
       <div class="service-icon" style="background:rgba(245,158,11,0.1);"><i class="fa-solid fa-chalkboard-user" style="color:#F59E0B;"></i></div>
@@ -508,6 +564,7 @@
       <p>Ateliers de formation à l'IA générative, audit digital de votre entreprise, accompagnement à la transformation numérique et formations Akili ERP pour vos équipes.</p>
       <div class="service-tags"><span class="service-tag" style="background:rgba(245,158,11,0.1);color:#F59E0B;">Formation IA</span><span class="service-tag" style="background:rgba(245,158,11,0.1);color:#F59E0B;">Audit Digital</span><span class="service-tag" style="background:rgba(245,158,11,0.1);color:#F59E0B;">Akili ERP</span></div>
       <div class="service-price" style="color:#F59E0B;"><i class="fa-solid fa-tag"></i> À partir de 100 000 FCFA</div>
+      <button class="service-more-btn" onclick="openServiceModal('formation')" style="border-color:rgba(245,158,11,0.4);color:#F59E0B;">En savoir plus <i class="fa-solid fa-arrow-right"></i></button>
     </div>
   </div>
 </section>
@@ -1088,6 +1145,207 @@
     });
   }, { threshold: 0.5 });
   document.querySelectorAll('.hero-stat-number, .stat-box h2').forEach(stat => counterObserver.observe(stat));
+
+  // ── MODAL SERVICES ───────────────────────────────────────
+  const SERVICES_DATA = {
+    ia: {
+      icon: '<i class="fa-solid fa-brain"></i>',
+      title: 'Intelligence Artificielle',
+      price: 'À partir de 150 000 FCFA',
+      definition: "L'Intelligence Artificielle (IA) désigne un ensemble de technologies permettant aux machines d'imiter l'intelligence humaine : comprendre le langage naturel, apprendre de données, prendre des décisions et automatiser des tâches répétitives. Elle englobe les chatbots, la reconnaissance d'image, l'analyse prédictive et l'IA générative (comme ChatGPT).",
+      utilite: [
+        "Créer un chatbot qui répond à vos clients 24h/24 sans intervention humaine",
+        "Automatiser les tâches répétitives : traitement de documents, tri d'emails, relances clients",
+        "Analyser vos données de vente pour prédire les tendances et optimiser vos stocks",
+        "Générer du contenu (textes, images, descriptions produits) en quelques secondes",
+        "Qualifier automatiquement vos prospects et les diriger vers le bon service"
+      ],
+      avantages: [
+        "Disponible 24h/24, 7j/7 — jamais malade, jamais en pause",
+        "Réduit les coûts de service client jusqu'à 40%",
+        "Traite des milliers de demandes simultanément sans erreur",
+        "Apprentissage continu — s'améliore avec le temps",
+        "Retour sur investissement dès les 2 premiers mois"
+      ],
+      tags: ['Chatbots IA', 'Automatisation', 'Data Science', 'IA Générative', 'Machine Learning', 'Analyse Prédictive'],
+      cas: "Banques, hôtels, cliniques, e-commerce, services RH, call centers"
+    },
+    web: {
+      icon: '<i class="fa-solid fa-code"></i>',
+      title: 'Développement Web',
+      price: 'À partir de 250 000 FCFA',
+      definition: "Le développement web est la création de sites internet et d'applications web accessibles depuis n'importe quel navigateur (Chrome, Safari, Firefox). Il englobe la conception graphique, le développement technique, l'intégration de paiement mobile et l'optimisation pour les moteurs de recherche (SEO).",
+      utilite: [
+        "Donner à votre entreprise une vitrine professionnelle visible 24h/24 partout dans le monde",
+        "Vendre en ligne avec paiement intégré (Orange Money, Wave, MTN, Visa)",
+        "Gérer vos réservations, rendez-vous et stocks en ligne",
+        "Communiquer avec vos clients via un portail ou espace membre",
+        "Automatiser vos processus commerciaux (devis, factures, commandes)"
+      ],
+      avantages: [
+        "Design 100% personnalisé à votre identité visuelle",
+        "Responsive : parfait sur mobile, tablette et PC",
+        "Optimisé SEO pour être trouvé sur Google",
+        "Hébergement sécurisé avec certificat SSL (HTTPS)",
+        "Livraison en 7 à 14 jours pour un site vitrine"
+      ],
+      tags: ['Site Vitrine', 'E-commerce', 'Sur Mesure', 'Next.js', 'WordPress', 'SEO'],
+      cas: "Commerces, cabinets, hôtels, restaurants, associations, artisans, PME"
+    },
+    studio: {
+      icon: '<i class="fa-solid fa-microphone-lines"></i>',
+      title: 'Studio d\'Enregistrement',
+      price: 'À partir de 50 000 FCFA',
+      definition: "Un studio d'enregistrement professionnel est un espace acoustiquement traité et équipé de matériel haut de gamme (micros à condensateur, préamplificateurs, interfaces audio) pour capturer, traiter et produire du son de qualité broadcast. Nous offrons enregistrement, mixage, mastering et direction artistique.",
+      utilite: [
+        "Enregistrer votre album, EP ou single dans des conditions professionnelles",
+        "Produire des voix off pour vos publicités radio, vidéos ou podcasts",
+        "Créer un podcast professionnel pour votre marque ou votre audience",
+        "Doubler ou sous-titrer des contenus vidéo en plusieurs langues",
+        "Composer des jingles, génériques et habillages sonores pour votre identité"
+      ],
+      avantages: [
+        "Équipement professionnel haut de gamme (micros Neumann, Neve, Pro Tools)",
+        "Ingénieurs du son expérimentés avec références internationales",
+        "Traitement acoustique pour un son sans bruit parasite",
+        "Mixage et mastering pour diffusion sur toutes les plateformes (Spotify, YouTube, radio)",
+        "Tarifs adaptés au marché africain"
+      ],
+      tags: ['Enregistrement Musical', 'Voix Off', 'Podcast', 'Mixage', 'Mastering', 'Jingle'],
+      cas: "Artistes, labels, agences pub, entreprises, médias, YouTubeurs, podcasters"
+    },
+    video: {
+      icon: '<i class="fa-solid fa-video"></i>',
+      title: 'Production Vidéo',
+      price: 'À partir de 300 000 FCFA',
+      definition: "La production vidéo professionnelle couvre l'ensemble du processus créatif : de la conception du scénario (pré-production) au tournage (production) jusqu'au montage, effets visuels et étalonnage (post-production). Nous réalisons des contenus captivants pour tout support : réseaux sociaux, télévision, cinéma.",
+      utilite: [
+        "Produire votre clip musical avec une direction artistique soignée",
+        "Réaliser des spots publicitaires pour la TV, YouTube ou réseaux sociaux",
+        "Créer des films institutionnels ou documentaires d'entreprise",
+        "Capturer des événements (conférences, galas, cérémonies) en qualité cinéma",
+        "Produire du contenu court et impactant pour Instagram, TikTok et Facebook"
+      ],
+      avantages: [
+        "Caméras professionnelles 4K Sony et Blackmagic",
+        "Drones pour des prises de vue aériennes spectaculaires",
+        "Équipe complète : réalisateur, cadreur, preneur de son, monteur",
+        "Étalonnage cinéma pour un rendu visuel professionnel",
+        "Livraison dans tous les formats (16:9, 9:16, 1:1) pour chaque plateforme"
+      ],
+      tags: ['Clip Musical', 'Publicité', 'Documentaire', 'Drone 4K', 'Corporate', 'Réseaux Sociaux'],
+      cas: "Artistes, marques, entreprises, ONG, institutions gouvernementales, médias"
+    },
+    marketing: {
+      icon: '<i class="fa-solid fa-chart-line"></i>',
+      title: 'Marketing Digital',
+      price: 'À partir de 150 000 FCFA/mois',
+      definition: "Le marketing digital regroupe toutes les stratégies de promotion et communication sur internet : gestion des réseaux sociaux, publicité en ligne (Facebook Ads, Google Ads, TikTok Ads), référencement naturel (SEO), email marketing et création de contenu. L'objectif : attirer des clients, les convertir et les fidéliser.",
+      utilite: [
+        "Augmenter votre visibilité en ligne et être trouvé par vos clients potentiels",
+        "Lancer des campagnes publicitaires ciblées (géographie, âge, intérêts)",
+        "Gérer vos pages Facebook, Instagram, LinkedIn et TikTok professionnellement",
+        "Créer du contenu engageant (posts, stories, reels, articles) pour votre audience",
+        "Analyser vos résultats et optimiser en temps réel pour maximiser votre ROI"
+      ],
+      avantages: [
+        "Ciblage précis : touchez exactement votre client idéal",
+        "Résultats mesurables en temps réel (impressions, clics, conversions)",
+        "Coût bien inférieur au marketing traditionnel (radio, TV, affichage)",
+        "Portée nationale et internationale depuis Abidjan",
+        "Rapports mensuels détaillés de performance"
+      ],
+      tags: ['Facebook Ads', 'Google Ads', 'SEO', 'Contenu', 'Community Management', 'Email Marketing'],
+      cas: "Boutiques, restaurants, cliniques, immobilier, e-commerce, événementiel"
+    },
+    app: {
+      icon: '<i class="fa-solid fa-mobile-screen-button"></i>',
+      title: 'Applications Mobiles',
+      price: 'À partir de 1 200 000 FCFA',
+      definition: "Une application mobile est un logiciel conçu spécialement pour les smartphones et tablettes Android et iOS. Nous développons des apps natives et hybrides avec Flutter, React Native et les technologies les plus récentes, intégrant le paiement mobile africain (Orange Money, Wave, MTN MoMo).",
+      utilite: [
+        "Permettre à vos clients de commander, réserver ou payer directement depuis leur téléphone",
+        "Envoyer des notifications push pour promouvoir vos offres et fidéliser",
+        "Géolocaliser vos livreurs, techniciens ou agents en temps réel",
+        "Créer un programme de fidélité numérique avec points et récompenses",
+        "Digitaliser vos processus internes (gestion terrain, collecte de données)"
+      ],
+      avantages: [
+        "Disponible sur Google Play Store et Apple App Store",
+        "Intégration native Orange Money, Wave, MTN MoMo, CinetPay",
+        "Fonctionne partiellement sans internet (mode offline)",
+        "Interface intuitive adaptée aux utilisateurs africains",
+        "Mises à jour et maintenance continues incluses"
+      ],
+      tags: ['Android', 'iOS', 'Flutter', 'Orange Money', 'Wave', 'Géolocalisation', 'Push Notifications'],
+      cas: "Livraison, transport, santé, finance, commerce, agriculture, éducation"
+    },
+    formation: {
+      icon: '<i class="fa-solid fa-chalkboard-user"></i>',
+      title: 'Conseil & Formation IA',
+      price: 'À partir de 100 000 FCFA',
+      definition: "Nous accompagnons les entreprises et institutions dans leur transition vers le numérique et l'intelligence artificielle. Cela va de la simple formation de vos équipes aux outils IA jusqu'à l'audit complet de vos processus pour identifier comment l'IA peut réduire vos coûts et augmenter votre efficacité.",
+      utilite: [
+        "Former vos équipes à l'utilisation de ChatGPT, Midjourney, Gemini et autres outils IA",
+        "Auditer vos processus métier pour identifier les gains possibles avec l'IA",
+        "Accompagner votre transformation digitale étape par étape",
+        "Former vos comptables et gestionnaires à Akili ERP (OHADA, RH, facturation)",
+        "Définir votre stratégie digitale sur 1 à 3 ans"
+      ],
+      avantages: [
+        "Formateurs certifiés avec expérience terrain en Afrique",
+        "Formations adaptées à votre secteur d'activité et niveau de votre équipe",
+        "Sessions en présentiel à Abidjan ou en ligne",
+        "Support post-formation pendant 30 jours",
+        "Certificat de formation remis à chaque participant"
+      ],
+      tags: ['Formation IA', 'ChatGPT', 'Audit Digital', 'Akili ERP', 'Stratégie Digitale', 'Accompagnement'],
+      cas: "PME, administrations, ONG, banques, écoles, hôtels, professions libérales"
+    }
+  };
+
+  function openServiceModal(id) {
+    const s = SERVICES_DATA[id];
+    if (!s) return;
+    document.getElementById('modalIcon').innerHTML = s.icon;
+    document.getElementById('modalTitle').textContent = s.title;
+    document.getElementById('modalPrice').innerHTML = '<i class="fa-solid fa-tag" style="margin-right:6px;"></i>' + s.price;
+    document.getElementById('modalBody').innerHTML = `
+      <div class="service-modal-section">
+        <h4><i class="fa-solid fa-circle-info"></i> Définition</h4>
+        <p>${s.definition}</p>
+      </div>
+      <div class="service-modal-section">
+        <h4><i class="fa-solid fa-bullseye"></i> À quoi ça sert ?</h4>
+        <ul class="service-modal-list">${s.utilite.map(u => `<li><i class="fa-solid fa-check-circle"></i>${u}</li>`).join('')}</ul>
+      </div>
+      <div class="service-modal-section">
+        <h4><i class="fa-solid fa-star"></i> Avantages</h4>
+        <ul class="service-modal-list">${s.avantages.map(a => `<li><i class="fa-solid fa-check-circle"></i>${a}</li>`).join('')}</ul>
+      </div>
+      <div class="service-modal-section">
+        <h4><i class="fa-solid fa-tags"></i> Domaines d'application</h4>
+        <div class="service-modal-tags">${s.tags.map(t => `<span class="service-modal-tag">${t}</span>`).join('')}</div>
+      </div>
+      <div class="service-modal-section" style="margin-bottom:0;">
+        <h4><i class="fa-solid fa-building"></i> Pour qui ?</h4>
+        <p>${s.cas}</p>
+      </div>
+      <div class="service-modal-cta">
+        <a href="https://wa.me/2252722353327?text=${encodeURIComponent('👋 Bonjour IMEDIA, je suis intéressé par votre service : ' + s.title + '. Pouvez-vous me contacter ?')}" class="cta-wa" target="_blank"><i class="fab fa-whatsapp"></i> Demander un devis</a>
+        <a href="#contact" class="cta-outline" onclick="closeServiceModal()">Nous contacter</a>
+      </div>
+    `;
+    document.getElementById('serviceModalOverlay').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeServiceModal(e) {
+    if (e && e.target !== document.getElementById('serviceModalOverlay')) return;
+    document.getElementById('serviceModalOverlay').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeServiceModal(); });
 
   // FAQ ACCORDION
   document.querySelectorAll('.faq-question').forEach(q => {
