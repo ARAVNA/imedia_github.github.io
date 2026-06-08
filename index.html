@@ -498,9 +498,16 @@
     <div class="service-card reveal delay-6">
       <div class="service-icon"><i class="fa-solid fa-mobile-screen-button"></i></div>
       <h3>Applications Mobiles</h3>
-      <p>Apps Android/iOS natives et hybrides. Paiement mobile, géolocalisation, chat temps réel, push notifications.</p>
-      <div class="service-tags"><span class="service-tag">Android</span><span class="service-tag">iOS</span><span class="service-tag">Web App</span></div>
+      <p>Apps Android/iOS natives et hybrides. Paiement mobile (Orange Money, Wave, MTN), géolocalisation, chat temps réel, push notifications.</p>
+      <div class="service-tags"><span class="service-tag">Android</span><span class="service-tag">iOS</span><span class="service-tag">Flutter</span></div>
       <div class="service-price"><i class="fa-solid fa-tag"></i> À partir de 1 200 000 FCFA</div>
+    </div>
+    <div class="service-card reveal delay-1" style="border-color:rgba(245,158,11,0.2);">
+      <div class="service-icon" style="background:rgba(245,158,11,0.1);"><i class="fa-solid fa-chalkboard-user" style="color:#F59E0B;"></i></div>
+      <h3>Conseil & Formation IA</h3>
+      <p>Ateliers de formation à l'IA générative, audit digital de votre entreprise, accompagnement à la transformation numérique et formations Akili ERP pour vos équipes.</p>
+      <div class="service-tags"><span class="service-tag" style="background:rgba(245,158,11,0.1);color:#F59E0B;">Formation IA</span><span class="service-tag" style="background:rgba(245,158,11,0.1);color:#F59E0B;">Audit Digital</span><span class="service-tag" style="background:rgba(245,158,11,0.1);color:#F59E0B;">Akili ERP</span></div>
+      <div class="service-price" style="color:#F59E0B;"><i class="fa-solid fa-tag"></i> À partir de 100 000 FCFA</div>
     </div>
   </div>
 </section>
@@ -836,8 +843,7 @@
   </div>
   <div class="contact-wrapper">
     <div class="contact-form-wrapper reveal-left">
-      <form name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field">
-        <p style="display:none;"><label>Ne pas remplir : <input name="bot-field" /></label></p>
+      <form id="contact-form" onsubmit="sendToWhatsApp(event)">
         <div class="form-group">
           <label for="nom">Nom complet *</label>
           <input type="text" id="nom" name="nom" placeholder="Votre nom et prénom" required>
@@ -847,21 +853,22 @@
           <input type="email" id="email" name="email" placeholder="votre@email.com" required>
         </div>
         <div class="form-group">
-          <label for="telephone">Téléphone</label>
+          <label for="telephone">Téléphone / WhatsApp</label>
           <input type="tel" id="telephone" name="telephone" placeholder="+225 XX XX XX XX">
         </div>
         <div class="form-group">
           <label for="projet">Type de projet *</label>
           <select id="projet" name="projet" required>
             <option value="">Sélectionnez un service</option>
-            <option value="akili-erp">🧠 Akili ERP — Abonnement / Démo</option>
-            <option value="ia">Intelligence Artificielle</option>
-            <option value="web">Site Web / Application</option>
-            <option value="studio">Studio d'enregistrement</option>
-            <option value="video">Production Vidéo</option>
-            <option value="marketing">Marketing Digital</option>
-            <option value="app-mobile">Application Mobile</option>
-            <option value="autre">Autre</option>
+            <option value="🧠 Akili ERP — Abonnement / Démo">🧠 Akili ERP — Abonnement / Démo</option>
+            <option value="Intelligence Artificielle">Intelligence Artificielle</option>
+            <option value="Site Web / Application">Site Web / Application</option>
+            <option value="Studio d'enregistrement">Studio d'enregistrement</option>
+            <option value="Production Vidéo">Production Vidéo</option>
+            <option value="Marketing Digital">Marketing Digital</option>
+            <option value="Application Mobile">Application Mobile</option>
+            <option value="Conseil & Formation IA">Conseil & Formation IA</option>
+            <option value="Autre">Autre</option>
           </select>
         </div>
         <div class="form-group">
@@ -869,7 +876,7 @@
           <textarea id="message" name="message" rows="6" placeholder="Décrivez votre projet en détail..." required></textarea>
         </div>
         <button type="submit" class="btn form-submit">
-          Envoyer ma demande <i class="fa-solid fa-paper-plane"></i>
+          Envoyer via WhatsApp <i class="fab fa-whatsapp"></i>
         </button>
       </form>
     </div>
@@ -902,7 +909,7 @@
             <a href="https://facebook.com/intelligenciamedia" target="_blank" title="Facebook"><i class="fab fa-facebook-f"></i></a>
             <a href="https://linkedin.com/company/intelligenciamedia" target="_blank" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
             <a href="https://wa.me/2252722353327" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
-            <a href="#" title="YouTube"><i class="fab fa-youtube"></i></a>
+            <a href="https://instagram.com/intelligenciamedia" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
           </div>
         </div>
       </div>
@@ -1036,25 +1043,35 @@
   }
   createParticles();
 
-  // FORMULAIRE
-  const form = document.querySelector('form[name="contact"]');
-  if (form) {
-    form.addEventListener('submit', function() {
-      const btn = form.querySelector('button[type="submit"]');
-      btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Envoi en cours...';
-      btn.disabled = true;
-      setTimeout(() => { btn.innerHTML = 'Envoyer ma demande <i class="fa-solid fa-paper-plane"></i>'; btn.disabled = false; }, 3000);
-    });
+  // FORMULAIRE → WhatsApp
+  function sendToWhatsApp(e) {
+    e.preventDefault();
+    const nom     = document.getElementById('nom').value.trim();
+    const email   = document.getElementById('email').value.trim();
+    const tel     = document.getElementById('telephone').value.trim();
+    const projet  = document.getElementById('projet').value;
+    const message = document.getElementById('message').value.trim();
+    const btn     = document.querySelector('#contact-form button[type="submit"]');
+    if (!nom || !email || !projet || !message) return;
+    const text = `👋 *Nouvelle demande depuis intelligenciamedia.com*\n\n👤 *Nom :* ${nom}\n📧 *Email :* ${email}${tel ? '\n📱 *Tél :* ' + tel : ''}\n🎯 *Service :* ${projet}\n\n💬 *Message :*\n${message}`;
+    btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Ouverture WhatsApp...';
+    btn.disabled = true;
+    window.open(`https://wa.me/2252722353327?text=${encodeURIComponent(text)}`, '_blank');
+    setTimeout(() => {
+      btn.innerHTML = 'Envoyer via WhatsApp <i class="fab fa-whatsapp"></i>';
+      btn.disabled = false;
+      document.getElementById('contact-form').reset();
+    }, 2500);
   }
 
   // COUNTER ANIMATION
-  function animateCounter(element, target) {
+  function animateCounter(element, target, suffix) {
     let start = 0;
     const increment = target / (2000 / 16);
     function update() {
       start += increment;
-      if (start < target) { element.textContent = Math.floor(start) + '+'; requestAnimationFrame(update); }
-      else { element.textContent = target + '+'; }
+      if (start < target) { element.textContent = Math.floor(start) + suffix; requestAnimationFrame(update); }
+      else { element.textContent = target + suffix; }
     }
     update();
   }
@@ -1062,8 +1079,11 @@
     entries.forEach(entry => {
       if (entry.isIntersecting && !entry.target.classList.contains('counted')) {
         entry.target.classList.add('counted');
-        const num = parseInt(entry.target.textContent.replace(/\D/g, ''));
-        if (num) animateCounter(entry.target, num);
+        const raw = entry.target.textContent;
+        const num = parseInt(raw.replace(/\D/g, ''));
+        if (!num) return;
+        const suffix = raw.includes('★') ? '★' : '+';
+        animateCounter(entry.target, num, suffix);
       }
     });
   }, { threshold: 0.5 });
