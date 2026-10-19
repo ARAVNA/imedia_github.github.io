@@ -118,7 +118,7 @@
       66%,74% { transform: translateY(-6.9em) }
       77%,85% { transform: translateY(-8.05em) }
       88%,96% { transform: translateY(-9.2em) }
-      99%,100%{ transform: translateY(0) }
+      99%,100%{ transform: translateY(-10.35em) }
     }
     .hero-badge i { color: #00ff88; }
     .hero h1 { font-size: clamp(36px, 6vw, 72px); font-weight: 800; margin-bottom: 25px; line-height: 1.1; animation: fadeInUp 1s ease 0.2s both; }
@@ -141,6 +141,8 @@
     .btn-gold:hover { box-shadow: 0 15px 40px rgba(245,158,11,0.4); }
     .btn-outline { display: inline-flex; align-items: center; gap: 10px; padding: 16px 36px; background: transparent; color: var(--primary); text-decoration: none; border-radius: 50px; font-weight: 700; font-size: 16px; transition: all 0.3s ease; border: 2px solid var(--primary); cursor: pointer; }
     .btn-outline:hover { background: var(--primary); color: #000; transform: translateY(-3px); box-shadow: var(--shadow); }
+    .btn-outline-gold { color: var(--gold); border-color: var(--gold); }
+    .btn-outline-gold:hover { background: var(--gold); color: #000; box-shadow: 0 15px 40px rgba(245,158,11,0.4); }
 
     /* SECTIONS */
     section { padding: 100px 8%; position: relative; }
@@ -531,7 +533,7 @@
       <a href="https://wa.me/2250799246182" class="btn">
         <i class="fab fa-whatsapp"></i> Discutons de votre projet
       </a>
-      <a href="#akili" target="_self" class="btn-outline btn-gold" style="color:#F59E0B; border-color:#F59E0B;">
+      <a href="#akili" target="_self" class="btn-outline btn-outline-gold">
         <i class="fa-solid fa-brain"></i> Découvrir Akili ERP
       </a>
     </div>
@@ -695,7 +697,7 @@
         <a href="https://akilierp.intelligenciamedia.com" class="btn btn-gold">
           <i class="fa-solid fa-rocket"></i> Essayer gratuitement
         </a>
-        <a href="#akili-pricing" target="_self" class="btn-outline" style="color: #F59E0B; border-color: #F59E0B;">
+        <a href="#akili-pricing" target="_self" class="btn-outline btn-outline-gold">
           <i class="fa-solid fa-tag"></i> Voir les tarifs
         </a>
       </div>
@@ -748,7 +750,7 @@
     <div class="pricing-grid">
       <div class="pricing-card reveal delay-1">
         <p class="pricing-plan">Starter</p>
-        <div class="pricing-price"><span class="gold">5 000 FCFA</span> <span>/ mois</span></div>
+        <div class="pricing-price"><span class="gold">Gratuit</span></div>
         <p class="pricing-desc">Parfait pour démarrer votre activité</p>
         <ul class="pricing-features">
           <li><i class="fa-solid fa-check"></i> Tableau de bord</li>
@@ -1112,7 +1114,8 @@
         <a href="https://facebook.com/intelligenciamedia" target="_blank" title="Facebook"><i class="fab fa-facebook-f"></i></a>
         <a href="https://linkedin.com/company/intelligenciamedia" target="_blank" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
         <a href="https://wa.me/2250799246182" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
-        <a href="#" title="YouTube"><i class="fab fa-youtube"></i></a>
+        <!-- YouTube : remettre le lien quand la chaîne existe
+        <a href="https://youtube.com/@VOTRE_CHAINE" title="YouTube"><i class="fab fa-youtube"></i></a> -->
       </div>
     </div>
     <div class="footer-column">
@@ -1152,7 +1155,7 @@
     </div>
   </div>
   <div class="footer-bottom">
-    <p>© 2026 INTELLIGENCIA MEDIA - Tous droits réservés.</p>
+    <p>© 2026 INTELLIGENCIA MEDIA, une marque d'<a href="https://www.africavit.com" target="_blank" rel="noopener">AFRICAViT SARL</a> - Tous droits réservés.</p>
     <p>
       <a href="mentions-legales.html" target="_self">Mentions Légales</a> |
       <a href="politique-confidentialite.html" target="_self">Politique de Confidentialité</a>
@@ -1192,13 +1195,16 @@
   }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
   document.querySelectorAll('.reveal, .reveal-left, .reveal-right').forEach(el => revealObserver.observe(el));
 
-  // SMOOTH SCROLL (ancres internes uniquement)
-  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function(e) {
-      e.preventDefault();
-      const target = document.querySelector(this.getAttribute('href'));
-      if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    });
+  // SMOOTH SCROLL (ancres internes uniquement, y compris les liens ajoutés plus tard comme ceux du modal)
+  document.addEventListener('click', function(e) {
+    const anchor = e.target.closest('a[href^="#"]');
+    if (!anchor) return;
+    const href = anchor.getAttribute('href');
+    if (href.length < 2) return;
+    const target = document.querySelector(href);
+    if (!target) return;
+    e.preventDefault();
+    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
   });
 
   // PARTICULES HERO
@@ -1446,7 +1452,7 @@
       </div>
       <div class="service-modal-cta">
         <a href="https://wa.me/2250799246182?text=${encodeURIComponent('👋 Bonjour IMEDIA, je suis intéressé par votre service : ' + s.title + '. Pouvez-vous me contacter ?')}" class="cta-wa" target="_blank"><i class="fab fa-whatsapp"></i> Demander un devis</a>
-        <a href="#contact" class="cta-outline" onclick="closeServiceModal()">Nous contacter</a>
+        <a href="#contact" target="_self" class="cta-outline" onclick="closeServiceModal()">Nous contacter</a>
       </div>
     `;
     document.getElementById('serviceModalOverlay').classList.add('open');
